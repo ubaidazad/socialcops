@@ -12,10 +12,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // configure logging
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 // configure routes
 app.use('/api', apiRoutes);
 
 // listen server on port
-app.listen(port, () => console.log(`listening on port ${port}!`));
+const server = app.listen(port, () => console.log(`listening on port ${port}!`));
+
+
+module.exports = {
+    server: server,
+    app: app
+};
