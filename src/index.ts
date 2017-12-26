@@ -1,7 +1,7 @@
+import * as bodyParser from "body-parser";
 import * as express from "express";
-import * as morgan from 'morgan';
-import * as bodyParser from 'body-parser';
-import { apiRoutes } from './routes/routes';
+import * as morgan from "morgan";
+import { apiRoutes } from "./routes/routes";
 
 const app = express();
 const port = process.env.port || 3000;
@@ -15,13 +15,12 @@ app.use(bodyParser.json());
 // app.use(morgan('dev'));
 
 // configure routes
-app.use('/api', apiRoutes);
+app.use("/api", apiRoutes);
 
 // listen server on port
 const server = app.listen(port, () => console.log(`listening on port ${port}!`));
 
-
 module.exports = {
-    server: server,
-    app: app
+    server,
+    app,
 };

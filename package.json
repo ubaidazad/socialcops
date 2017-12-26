@@ -2,8 +2,9 @@
   "name": "socialcops",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
+    "lint": "./node_modules/.bin/tslint --project .",
     "start": "nodemon ./dist/src/index.js",
     "test": "nyc mocha"
   },

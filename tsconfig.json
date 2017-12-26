@@ -5,8 +5,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "strict": true,
-    "rootDir": ".",
-    "watch": true
+    "rootDir": "."
   },
   "exclude": [
     "./test"
