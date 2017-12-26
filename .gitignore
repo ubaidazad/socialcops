@@ -3,3 +3,5 @@ dist/
 .vscode/
 thumbnails/
 images/
+coverage/
+.nyc_output/
