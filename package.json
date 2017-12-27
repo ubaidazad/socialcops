@@ -8,7 +8,7 @@
     "build": "tsc",
     "start": "node ./dist/src/index.js",
     "server": "nodemon ./dist/src/index.js",
-    "test": "nyc mocha"
+    "test": "nyc mocha --timeout 10000 --exit"
   },
   "nyc": {
     "include": [
@@ -24,8 +24,7 @@
       "text-summary",
       "html"
     ],
-    "sourceMap": true,
-    "instrument": true
+    "sourceMap": true
   },
   "author": "Ubaid Azad",
   "license": "ISC",

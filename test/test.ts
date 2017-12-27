@@ -78,6 +78,20 @@ describe('ROUTES', () => {
                     done();
                 })
         });
+
+        it('should return success as false when imageUrl is wrong', (done) => {
+            const uri = 'http://www.1stopdesign.com/wp-content/photo.jpg';
+            chai.request(server).post('/api/thumbnail')
+                .set('x-access-token', token)
+                .send({
+                    imageUrl: uri
+                })
+                .end((err, res) => {
+                    expect(res.status).to.equal(200);
+                    expect(res.body.success).to.equal(false)
+                    done();
+                });
+        });
     })
 
 });

@@ -77,7 +77,8 @@ function download(uri: string): Promise<string> {
     // convert actual uri to base64 encoding for filename 
     const fileName = new Buffer(uri).toString("base64") + path.extname(uri);
     const filePath = path.join("images", fileName);
-    return new Promise((resolve, reject) => {
+
+    return new Promise<string>((resolve, reject) => {
         // get cached images.
         if (fileCache[fileName]) {
             return resolve(fileCache[fileName].imagePath);
@@ -87,7 +88,7 @@ function download(uri: string): Promise<string> {
         var imageRequest = request(uri, (err, res, body) => {
             // throw error if we got error or response isnt success
             if (err || res.statusCode !== 200) {
-                throw err;
+                reject('cannot download the given image.');
             }
         });
 
@@ -119,12 +120,10 @@ function download(uri: string): Promise<string> {
                         originalUri: uri,
                         imagePath: filePath,
                     };
+                    resolve(filePath);
                 }).catch((err: any) => {
                     reject(err.toString());
                 });
-
-                // resolve path before actually saving the image.
-                return resolve(filePath);
             });
         });
 
