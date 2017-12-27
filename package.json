@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/src/index.js",
   "scripts": {
-    "lint": "./node_modules/.bin/tslint --project .",
+    "tslint": "./node_modules/.bin/tslint --project .",
     "build": "tsc",
     "start": "node ./dist/src/index.js",
     "server": "nodemon ./dist/src/index.js",

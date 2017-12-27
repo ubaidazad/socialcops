@@ -4,16 +4,19 @@ node > 6.x
 
 npm > 3.x
 
+docker
+
+
 ## Run Development Server
 `npm i`
 
-watch for code changes
-
 `tsc --watch`
 
-uses nodemon to start the server, server will restart itself on file changes.
+>watch for code file changes.
 
 `npm run server`
+
+>uses nodemon to start the server, server will restart itself on file changes.
 
 
 ## Build docker
@@ -31,8 +34,8 @@ before building docker, app needs to be build using the following cmd.
 ## Run tests and coverage reports
 `npm test`
 
-coverage reports will be under `coverage` directory.
+>coverage reports will be under `coverage` directory.
 
 
 ## Run Lint
-`npm run lint`
+`npm run tslint`
