@@ -15,13 +15,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // configure logging
-app.use(morgan("combined"));
+if (process.env.NODE_ENV !== 'test') {
+    app.use(morgan("combined"));
+}
 
 // configure routes
 app.use("/api", apiRoutes);
 
 // create required directories
-mkdirp("images", () => {});
+mkdirp("images", () => { });
 mkdirp("thumbnails", () => { });
 
 // listen server on port
