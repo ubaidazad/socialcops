@@ -30,3 +30,6 @@ before building docker, app needs to be build using the following cmd.
 ## Run tests
 `npm test`
 
+
+## Run Lint
+`npm run lint`
