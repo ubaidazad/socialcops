@@ -27,8 +27,10 @@ before building docker, app needs to be build using the following cmd.
 `docker run -p 9000:3000 socialcops`
 
 
-## Run tests
+## Run tests and coverage reports
 `npm test`
+
+coverage reports will be under `coverage` directory.
 
 
 ## Run Lint
