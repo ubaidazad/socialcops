@@ -1,0 +1,14 @@
+FROM node:carbon-alpine
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+# install only production dependencies.
+RUN npm install --only=production
+
+COPY . .
+
+# app will run on port 3000, exposing the same
+EXPOSE 3000
+
+CMD [ "npm", "start" ]
