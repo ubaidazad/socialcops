@@ -55,8 +55,15 @@ apiRoutes.post("/thumbnail", async (req, res) => {
             message: "given file extension not supported.",
         });
     }
-    const imagePath = await download(req.body.imageUrl);
-    return res.send(imagePath);
+    try {
+        const imagePath = await download(req.body.imageUrl);
+        return res.send(imagePath);
+    } catch (e) {
+        return res.json({
+            success: false,
+            message: 'cannot download from the url given'
+        })
+    }
 });
 
 interface IFileCacheDict {
@@ -67,30 +74,59 @@ interface IFileCacheDict {
 const fileCache: { [key: string]: IFileCacheDict } = {};
 
 function download(uri: string): Promise<string> {
+    // convert actual uri to base64 encoding for filename 
     const fileName = new Buffer(uri).toString("base64") + path.extname(uri);
     const filePath = path.join("images", fileName);
     return new Promise((resolve, reject) => {
+        // get cached images.
         if (fileCache[fileName]) {
             return resolve(fileCache[fileName].imagePath);
         }
-        request(uri).pipe(fs.createWriteStream(filePath).on("close", () => {
-            thumbnail({
-                source: filePath,
-                destination: "thumbnails",
-                suffix: "",
-                width: 50,
-                height: 50,
-                overwrite: true,
-            }).then((response: any) => {
-                fileCache[fileName] = {
-                    originalUri: uri,
-                    imagePath: filePath,
-                };
-            }).catch((err: any) => {
-                reject(err.toString());
+
+        // request the given uri
+        var imageRequest = request(uri, (err, res, body) => {
+            // throw error if we got error or response isnt success
+            if (err || res.statusCode !== 200) {
+                throw err;
+            }
+        });
+
+        // save image data.
+        let imageData: any[] = [];
+        imageRequest.on('data', (data) => {
+            imageData.push(data);
+        });
+
+        imageRequest.on('end', () => {
+            const buffer = Buffer.concat(imageData);
+
+            // save original image.
+            fs.writeFile(filePath, buffer, 'binary', (err) => {
+                if (err) throw err;
+
+                // save thumbnail
+                thumbnail({
+                    source: filePath,
+                    destination: "thumbnails",
+                    suffix: "",
+                    width: 50,
+                    height: 50,
+                    overwrite: true,
+                }).then((response: any) => {
+                    // save the uri for future use
+                    // could be redis, or any other db
+                    fileCache[fileName] = {
+                        originalUri: uri,
+                        imagePath: filePath,
+                    };
+                }).catch((err: any) => {
+                    reject(err.toString());
+                });
+
+                // resolve path before actually saving the image.
+                return resolve(filePath);
             });
-            return resolve(filePath);
-        }));
+        });
 
     });
 }
