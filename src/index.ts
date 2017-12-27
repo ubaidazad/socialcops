@@ -2,6 +2,7 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as mkdirp from "mkdirp";
 import * as morgan from "morgan";
+import { isNull } from "util";
 import { apiRoutes } from "./routes/routes";
 
 const app = express();
@@ -20,7 +21,7 @@ app.use(morgan("combined"));
 app.use("/api", apiRoutes);
 
 // create required directories
-mkdirp("images", () => { });
+mkdirp("images", () => {});
 mkdirp("thumbnails", () => { });
 
 // listen server on port
