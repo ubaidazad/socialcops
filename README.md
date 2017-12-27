@@ -26,6 +26,7 @@ before building docker, app needs to be build using the following cmd.
 ## Run docker container
 `docker run -p 9000:3000 socialcops`
 
+>docker uses node 8 and npm 5
 
 ## Run tests and coverage reports
 `npm test`
