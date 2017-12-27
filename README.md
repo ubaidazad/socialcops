@@ -17,6 +17,10 @@ uses nodemon to start the server, server will restart itself on file changes.
 
 
 ## Build docker
+before building docker, app needs to be build using the following cmd.
+
+`npm run build`
+
 `docker build -t socialcops .`
 
 ## Run docker container
