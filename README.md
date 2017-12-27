@@ -7,6 +7,12 @@ npm > 3.x
 ## Run Development Server
 `npm i`
 
+watch for code changes
+
+`tsc --watch`
+
+uses nodemon to start the server, server will restart itself on file changes.
+
 `npm run server`
 
 
